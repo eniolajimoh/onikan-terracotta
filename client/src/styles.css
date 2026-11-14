@@ -278,6 +278,11 @@ kbd { min-width: 20px; padding: 3px 5px; border: 1px solid var(--line); color: #
 .admin-field { display: grid; gap: 7px; color: #5f5a50; font-size: 13px; font-weight: 600; }
 .admin-field > span small { display: block; margin-top: 3px; color: #8b8478; font-size: 11px; font-weight: 400; }
 .admin-field b { color: var(--clay); }
+.publication-options { display: flex; gap: 8px; }
+.publication-options button { min-height: 44px; padding: 9px 13px; border: 1px solid #d7d0c4; background: #fffefa; color: #5f5a50; font: inherit; font-weight: 500; cursor: pointer; }
+.publication-options button.selected { border-color: var(--clay-deep); background: var(--clay-deep); color: #fffefa; }
+.publication-options button:focus-visible { outline: 2px solid var(--clay); outline-offset: 2px; }
+.admin-publication > small { color: #817a6d; font-size: 11px; font-weight: 400; }
 .admin-field input, .admin-field textarea, .admin-field select, .login-form input { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid #d7d0c4; border-radius: 0; outline: none; background: #fffefa; color: var(--ink); font-size: 14px; font-weight: 400; }
 .admin-field textarea { min-height: 115px; resize: vertical; }
 .admin-field input:focus, .admin-field textarea:focus, .admin-field select:focus, .login-form input:focus { border-color: var(--clay); box-shadow: 0 0 0 2px rgba(152,90,61,.12); }
@@ -308,8 +313,6 @@ kbd { min-width: 20px; padding: 3px 5px; border: 1px solid var(--line); color: #
 .login-form { display: grid; gap: 17px; margin-top: 28px; }
 .login-form label { display: grid; gap: 7px; color: #5f5a50; font-size: 13px; font-weight: 600; }
 .login-form button { margin-top: 4px; cursor: pointer; }
-.login-help { margin: 24px 0 0 !important; padding-top: 18px; border-top: 1px solid var(--line); font-size: 12px !important; }
-.login-help code { padding: 2px 4px; background: #eee9df; color: var(--clay-deep); font-size: 12px; }
 
 @media (max-width: 950px) {
   .admin-topbar { padding-left: 5vw; padding-right: 5vw; }

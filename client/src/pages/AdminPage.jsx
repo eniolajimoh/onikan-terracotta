@@ -216,7 +216,6 @@ export default function AdminPage() {
             {error && <p className="form-error" role="alert">{error}</p>}
             <button className="button button-dark" type="submit" disabled={saving}>{saving ? 'Signing in…' : 'Sign in'} <span aria-hidden="true">↗</span></button>
           </form>
-          <p className="login-help">First administrator? Run <code>npm run admin:create</code> in the project terminal.</p>
         </section>
       )}
 
@@ -241,7 +240,7 @@ export default function AdminPage() {
                 <Field label="Width (cm)" name="width" value={form.width} onChange={updateField} type="number" />
                 <Field label="Length (cm)" name="length" value={form.length} onChange={updateField} type="number" />
                 <Field label="Conservation status" name="conservationStatus" value={form.conservationStatus} onChange={updateField} />
-                <label className="admin-field"><span>Publication</span><select name="status" value={form.status} onChange={updateField}><option value="DRAFT">Save as draft</option><option value="PUBLISHED">Publish now</option></select></label>
+                <div className="admin-field admin-publication"><span>Publication</span><div className="publication-options" role="group" aria-label="Publication status"><button type="button" aria-pressed={form.status === 'DRAFT'} className={form.status === 'DRAFT' ? 'selected' : ''} onClick={() => setForm((current) => ({ ...current, status: 'DRAFT' }))}>Save as draft</button><button type="button" aria-pressed={form.status === 'PUBLISHED'} className={form.status === 'PUBLISHED' ? 'selected' : ''} onClick={() => setForm((current) => ({ ...current, status: 'PUBLISHED' }))}>Publish now</button></div><small>Published records appear in the public collection.</small></div>
                 <Field label="Provenance" name="provenance" value={form.provenance} onChange={updateField} multiline />
                 <Field label="Interpretive notes" name="interpretiveNotes" value={form.interpretiveNotes} onChange={updateField} multiline />
                 <label className="admin-field admin-field-wide"><span>Photograph <small>PNG, JPG, or WebP · up to 8 MB</small></span><input type="file" accept="image/png,image/jpeg,image/webp" onChange={(event) => setPhoto(event.target.files?.[0] || null)} /></label>
