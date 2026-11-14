@@ -154,13 +154,15 @@ export default function AdminPage() {
 
   async function saveArtifact(event) {
     event.preventDefault();
+    const submittedStatus = event.nativeEvent.submitter?.dataset.status;
+    const submittedForm = submittedStatus ? { ...form, status: submittedStatus } : form;
     setError('');
     setMessage('');
     setSaving(true);
     try {
       const { artifact } = await request(editingId ? `/api/admin/artifacts/${encodeURIComponent(editingId)}` : '/api/admin/artifacts', {
         method: editingId ? 'PATCH' : 'POST',
-        body: JSON.stringify(form),
+        body: JSON.stringify(submittedForm),
       });
       setEditingId(artifact.id);
       if (photo) {
@@ -227,7 +229,7 @@ export default function AdminPage() {
           </div>
           <div className="admin-columns">
             <form className="artifact-form" id="artifact-editor" onSubmit={saveArtifact}>
-              <div className="admin-form-heading"><div><p className="eyebrow">{editingId ? 'Edit record' : 'New record'}</p><h2>{editingId ? 'Update this object' : 'Add an object'}</h2></div><span>Fields marked * are required.</span></div>
+              <div className="admin-form-heading"><div><p className="eyebrow">{editingId ? 'Edit record' : 'New record'}</p><h2>{editingId ? 'Update this object' : 'Add an object'}</h2></div><span>{editingId ? `Editing “${form.title}”. This record stays in the archive.` : 'Fields marked * are required.'}</span></div>
               <div className="admin-form-grid">
                 <Field label="Object title" name="title" value={form.title} onChange={updateField} required />
                 <Field label="Catalogue number" name="catalogueNumber" value={form.catalogueNumber} onChange={updateField} required />
@@ -240,19 +242,22 @@ export default function AdminPage() {
                 <Field label="Width (cm)" name="width" value={form.width} onChange={updateField} type="number" />
                 <Field label="Length (cm)" name="length" value={form.length} onChange={updateField} type="number" />
                 <Field label="Conservation status" name="conservationStatus" value={form.conservationStatus} onChange={updateField} />
-                <div className="admin-field admin-publication"><span>Publication</span><div className="publication-options" role="group" aria-label="Publication status"><button type="button" aria-pressed={form.status === 'DRAFT'} className={form.status === 'DRAFT' ? 'selected' : ''} onClick={() => setForm((current) => ({ ...current, status: 'DRAFT' }))}>Save as draft</button><button type="button" aria-pressed={form.status === 'PUBLISHED'} className={form.status === 'PUBLISHED' ? 'selected' : ''} onClick={() => setForm((current) => ({ ...current, status: 'PUBLISHED' }))}>Publish now</button></div><small>Published records appear in the public collection.</small></div>
                 <Field label="Provenance" name="provenance" value={form.provenance} onChange={updateField} multiline />
                 <Field label="Interpretive notes" name="interpretiveNotes" value={form.interpretiveNotes} onChange={updateField} multiline />
                 <label className="admin-field admin-field-wide"><span>Photograph <small>PNG, JPG, or WebP · up to 8 MB</small></span><input type="file" accept="image/png,image/jpeg,image/webp" onChange={(event) => setPhoto(event.target.files?.[0] || null)} /></label>
               </div>
               {error && <p className="form-error" role="alert">{error}</p>}
               {message && <p className="form-success" role="status">{message}</p>}
-              <div className="admin-form-actions"><button className="button button-dark admin-save" type="submit" disabled={saving}>{saving ? 'Saving record…' : editingId ? 'Update object' : 'Save object'} <span aria-hidden="true">↗</span></button>{editingId && <button type="button" className="admin-cancel-edit" onClick={clearEditor}>Cancel edit</button>}</div>
+              <div className="admin-form-actions" aria-label="Save and publication actions">
+                <button className="button button-outline admin-save-secondary" type="submit" data-status="DRAFT" disabled={saving}>{saving ? 'Saving…' : editingId && form.status === 'PUBLISHED' ? 'Unpublish to draft' : 'Save as draft'}</button>
+                <button className="button button-dark admin-save" type="submit" data-status="PUBLISHED" disabled={saving}>{saving ? 'Saving…' : form.status === 'PUBLISHED' ? 'Save and keep published' : 'Save and publish'} <span aria-hidden="true">↗</span></button>
+                {editingId && <button type="button" className="admin-cancel-edit" onClick={clearEditor}>Cancel edit</button>}
+              </div>
             </form>
             <aside className="admin-records">
               <p className="eyebrow">The archive</p><h2>Records <span>{artifacts.length}</span></h2>
-              {artifacts.length ? <ul>{artifacts.map((artifact) => <li key={artifact.id}>
-                <div><strong>{artifact.title}</strong><span>{artifact.catalogueNumber} · {artifact.status.toLowerCase()}</span></div>
+              {artifacts.length ? <ul>{artifacts.map((artifact) => <li key={artifact.id} className={editingId === artifact.id ? 'is-editing' : ''}>
+                <div><strong>{artifact.title}</strong><span>{artifact.catalogueNumber} · {artifact.status.toLowerCase()}{editingId === artifact.id ? ' · editing' : ''}</span></div>
                 <div className="admin-record-actions"><button type="button" onClick={() => editArtifact(artifact)}>Edit</button>{artifact.status === 'PUBLISHED' && <a href={`${PUBLIC_SITE_URL}/artifacts/${encodeURIComponent(artifact.id)}`} target="_blank" rel="noreferrer">View ↗</a>}</div>
               </li>)}</ul> : <p className="admin-empty">No records yet. Add the first object using the form.</p>}
             </aside>

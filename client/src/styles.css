@@ -288,9 +288,10 @@ kbd { min-width: 20px; padding: 3px 5px; border: 1px solid var(--line); color: #
 .admin-field input:focus, .admin-field textarea:focus, .admin-field select:focus, .login-form input:focus { border-color: var(--clay); box-shadow: 0 0 0 2px rgba(152,90,61,.12); }
 .admin-field-wide { grid-column: 1 / -1; }
 .admin-field input[type=file] { padding: 9px; }
-.admin-save { margin-top: 25px; cursor: pointer; }
-.admin-form-actions { display: flex; align-items: center; gap: 20px; }
-.admin-cancel-edit { margin-top: 25px; border: 0; background: transparent; color: #716a5e; font-size: 13px; cursor: pointer; }
+.admin-save { margin-top: 0; cursor: pointer; }
+.admin-form-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 25px; }
+.admin-save-secondary { cursor: pointer; }
+.admin-cancel-edit { border: 0; background: transparent; color: #716a5e; font-size: 13px; cursor: pointer; }
 .admin-save:disabled, .login-form button:disabled { opacity: .65; cursor: wait; }
 .form-error, .form-success { margin: 16px 0 0; font-size: 13px; line-height: 1.5; }
 .form-error { color: #a13c2d; }
@@ -298,6 +299,7 @@ kbd { min-width: 20px; padding: 3px 5px; border: 1px solid var(--line); color: #
 .admin-records h2 span { display: inline-grid; min-width: 27px; height: 27px; place-items: center; border-radius: 50%; background: #eae4d7; color: var(--clay-deep); font: 13px Arial, sans-serif; vertical-align: middle; }
 .admin-records ul { margin: 21px 0 0; padding: 0; list-style: none; }
 .admin-records li { display: flex; justify-content: space-between; gap: 14px; padding: 15px 0; border-top: 1px solid var(--line); }
+.admin-records li.is-editing { padding-right: 9px; padding-left: 9px; background: #eee8dc; }
 .admin-records li strong, .admin-records li span { display: block; }
 .admin-records li strong { font: 17px var(--serif); }
 .admin-records li span { margin-top: 5px; color: #777165; font-size: 11px; text-transform: capitalize; }
