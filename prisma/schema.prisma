@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  EDITOR
+  MODERATOR
+}
+
+enum PublicationStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum CommentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  role         UserRole @default(EDITOR)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  sessions     Session[]
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Artifact {
+  id                 String            @id @default(cuid())
+  title              String
+  catalogueNumber    String            @unique
+  description        String            @db.Text
+  height             Float?
+  width              Float?
+  length             Float?
+  material           String?
+  culture            String?
+  geographicalOrigin String?
+  estimatedPeriod    String?
+  provenance         String?           @db.Text
+  conservationStatus String?
+  interpretiveNotes  String?           @db.Text
+  status             PublicationStatus @default(DRAFT)
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  images             ArtifactImage[]
+  references         ArtifactReference[]
+  categories         ArtifactCategory[]
+  comments           Comment[]
+  likes              Like[]
+
+  @@index([status, createdAt])
+  @@index([title])
+}
+
+model ArtifactImage {
+  id         String   @id @default(cuid())
+  artifactId String
+  url        String
+  publicId   String?
+  altText    String?
+  sortOrder  Int      @default(0)
+  createdAt  DateTime @default(now())
+  artifact   Artifact @relation(fields: [artifactId], references: [id], onDelete: Cascade)
+
+  @@index([artifactId, sortOrder])
+}
+
+model Reference {
+  id          String              @id @default(cuid())
+  title       String
+  authors     String?
+  publication String?
+  year        Int?
+  url         String?
+  artifacts   ArtifactReference[]
+}
+
+model ArtifactReference {
+  artifactId  String
+  referenceId String
+  artifact    Artifact  @relation(fields: [artifactId], references: [id], onDelete: Cascade)
+  reference   Reference @relation(fields: [referenceId], references: [id], onDelete: Cascade)
+
+  @@id([artifactId, referenceId])
+}
+
+model Category {
+  id        String             @id @default(cuid())
+  name      String             @unique
+  slug      String             @unique
+  artifacts ArtifactCategory[]
+}
+
+model ArtifactCategory {
+  artifactId String
+  categoryId String
+  artifact   Artifact @relation(fields: [artifactId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([artifactId, categoryId])
+}
+
+model Comment {
+  id         String        @id @default(cuid())
+  artifactId String
+  name       String
+  body       String        @db.Text
+  status     CommentStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+  artifact   Artifact      @relation(fields: [artifactId], references: [id], onDelete: Cascade)
+
+  @@index([artifactId, status, createdAt])
+}
+
+model Like {
+  id         String   @id @default(cuid())
+  artifactId String
+  visitorKey String
+  createdAt  DateTime @default(now())
+  artifact   Artifact @relation(fields: [artifactId], references: [id], onDelete: Cascade)
+
+  @@unique([artifactId, visitorKey])
+}

@@ -1,0 +1,9 @@
+node_modules/
+client/dist/
+server/uploads/
+.env
+.env.*
+!.env.example
+coverage/
+.DS_Store
+npm-debug.log*
