@@ -29,7 +29,7 @@ export default function ArtifactPage({ identifier }) {
     const message = state === 'loading' ? 'Loading object documentation…' : state === 'not-found' ? 'This object is not available in the public archive.' : 'The record could not be loaded right now.';
     return (
       <main className="detail-state">
-        <a className="wordmark" href="/"><span className="wordmark-symbol" aria-hidden="true">O</span><span>Onikan<br />Chronicles</span></a>
+        <a className="wordmark" href="/"><span className="wordmark-symbol" aria-hidden="true">O</span><span>Onikan<br />Documentation</span></a>
         <p role="status">{message}</p>
         <a className="text-link" href="/#collection">Return to the archive ↗</a>
       </main>
@@ -40,8 +40,8 @@ export default function ArtifactPage({ identifier }) {
   return (
     <>
       <header className="site-header">
-        <a className="wordmark" href="/"><span className="wordmark-symbol" aria-hidden="true">O</span><span>Onikan<br />Chronicles</span></a>
-        <nav className="main-nav" aria-label="Main navigation"><a href="/#collection">Collection</a><a href="/#story">Our story</a><a href="/#learn">Learn</a><a href="/#references">References</a></nav>
+        <a className="wordmark" href="/"><span className="wordmark-symbol" aria-hidden="true">O</span><span>Onikan<br />Documentation</span></a>
+        <nav className="main-nav" aria-label="Main navigation"><a href="/#collection">Collection</a><a href="/learn">Learn</a><a href="/references">References</a></nav>
         <a className="header-cta" href="/#collection">Back to collection <span aria-hidden="true">↗</span></a>
       </header>
       <main className="artifact-detail">
@@ -74,7 +74,7 @@ export default function ArtifactPage({ identifier }) {
           </article>
         </div>
       </main>
-      <footer className="site-footer"><a className="wordmark footer-wordmark" href="/"><span className="wordmark-symbol" aria-hidden="true">O</span><span>Onikan<br />Chronicles</span></a><p>A living archive for the objects, histories and knowledge of Onikan.</p><a href="#top" className="back-top">Back to top ↑</a><small>© {new Date().getFullYear()} Onikan Terracotta Chronicles</small></footer>
+      <footer className="site-footer"><a className="wordmark footer-wordmark" href="/"><span className="wordmark-symbol" aria-hidden="true">O</span><span>Onikan<br />Documentation</span></a><p>A growing documentation of Onikan’s objects, histories and knowledge.</p><a href="#top" className="back-top">Back to top ↑</a><small>© {new Date().getFullYear()} Onikan Terracotta Documentation</small></footer>
     </>
   );
 }

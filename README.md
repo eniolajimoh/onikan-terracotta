@@ -73,7 +73,7 @@ Railway keeps MySQL private by default; the API connects over the project's priv
 1. Import the repository as one Vercel project with the repository root as the project root.
 2. The checked-in `vercel.json` sets the build command to `npm run build --workspace client` and output directory to `client/dist`.
 3. Set `RAILWAY_API_URL` to the Railway API's public HTTPS origin (for example, `https://your-api.up.railway.app`, without `/api`).
-4. Set `VITE_PUBLIC_SITE_URL` to the public collection URL. Add the public domain and an `admin.` subdomain to this Vercel project; the `admin.` host opens the sign-in page directly. `/admin` remains available for local development.
+4. Set `VITE_PUBLIC_SITE_URL` to the public collection URL. Add the public domain and an `admin.` subdomain to this Vercel project; the `admin.` host openfor s the sign-in page directly. `/admin` remains available for local development.
 5. Do not set `VITE_API_URL`; requests should go through Vercel's `/api` proxy.
 
 Keep Railway and Vercel secrets in their platform environment-variable settings, not in Git. Any Vercel environment-variable changes require a new deployment.

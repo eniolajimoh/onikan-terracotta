@@ -53,7 +53,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     const previousTitle = document.title;
-    document.title = 'Administrator sign in · Onikan Chronicles';
+    document.title = 'Administrator sign in · Onikan Documentation';
     const meta = document.createElement('meta');
     meta.name = 'robots';
     meta.content = 'noindex, nofollow';
@@ -201,7 +201,7 @@ export default function AdminPage() {
   return (
     <main className="admin-shell">
       <header className="admin-topbar">
-        <a className="wordmark" href="/"><span className="wordmark-symbol" aria-hidden="true">O</span><span>Onikan<br />Chronicles</span></a>
+        <a className="wordmark" href="/"><span className="wordmark-symbol" aria-hidden="true">O</span><span>Onikan<br />Documentation</span></a>
         <a className="admin-public-link" href={PUBLIC_SITE_URL}>View public site ↗</a>
         {user && <button type="button" className="admin-signout" onClick={signOut}>Sign out</button>}
       </header>

@@ -6,6 +6,8 @@
   "outputDirectory": "client/dist",
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api/proxy?path=:path*" },
+    { "source": "/learn", "destination": "/index.html" },
+    { "source": "/references", "destination": "/index.html" },
     { "source": "/admin", "destination": "/index.html" },
     { "source": "/artifacts/:id", "destination": "/index.html" }
   ],

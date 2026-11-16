@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import AdminPage from './AdminPage.jsx';
 import ArtifactPage from './ArtifactPage.jsx';
+import LearnPage from './LearnPage.jsx';
+import ReferencesPage from './ReferencesPage.jsx';
 import QRPanel from '../components/QRPanel.jsx';
 
 const API_URL = import.meta.env.VITE_API_URL || '';
-const heroImage = 'https://upload.wikimedia.org/wikipedia/commons/8/82/Benin_Head%2C_Bristol_City_Museum_and_Art_Gallery.jpg';
+const heroImage = '/bronze-bowl.png';
 
 function ArrowIcon() {
   return <span aria-hidden="true" className="arrow">↗</span>;
@@ -93,15 +95,15 @@ function HomePage() {
   return (
     <>
       <header className="site-header">
-        <a className="wordmark" href="#top" aria-label="Onikan Terracotta Chronicles home">
+        <a className="wordmark" href="#top" aria-label="Onikan Terracotta Documentation home">
           <span className="wordmark-symbol" aria-hidden="true">O</span>
-          <span>Onikan<br />Chronicles</span>
+          <span>Onikan<br />Documentation</span>
         </a>
         <nav className="main-nav" aria-label="Main navigation">
           <a href="#collection">Collection</a>
           <a href="#story">Our story</a>
-          <a href="#learn">Learn</a>
-          <a href="#references">References</a>
+          <a href="/learn">Learn</a>
+          <a href="/references">References</a>
         </nav>
         <a className="header-cta" href="#collection">Explore the archive <ArrowIcon /></a>
         <a className="mobile-menu" href="#collection" aria-label="Skip to collection">Explore <span aria-hidden="true">↓</span></a>
@@ -112,7 +114,7 @@ function HomePage() {
           <div className="hero-copy">
             <p className="eyebrow"><span className="eyebrow-line" /> Digital artifact documentation</p>
             <h1 id="hero-title">Every object<br />holds a <em>story.</em></h1>
-            <p className="hero-intro">A living archive of Onikan’s terracotta and sculptural heritage—documented with care, shared for everyone.</p>
+            <p className="hero-intro">A living archive of Onikan’s terracotta and sculptural heritage—documented with care, shared for everyone.<span className="hero-project-credit">Documented by Fatiah Jimoh as part of her final-year project, supervised by <a href="https://sci.ui.edu.ng/node/1510" target="_blank" rel="noreferrer">Dr. E. A. Orijemie, Faculty of Science, University of Ibadan</a>.</span></p>
             <div className="hero-actions">
               <a className="button button-dark" href="#collection">Explore the collection <ArrowIcon /></a>
               <a className="quiet-link" href="#story">Discover the project <span aria-hidden="true">↓</span></a>
@@ -121,9 +123,9 @@ function HomePage() {
           </div>
           <div className="hero-visual">
             <div className="hero-image-wrap">
-              <img src={heroImage} alt="Commemorative head from the Kingdom of Benin, photographed at Bristol City Museum and Art Gallery" />
+              <img src={heroImage} alt="Decorated bronze bowl documented for the Onikan collection" />
               <span className="image-number">FIG. 01</span>
-              <div className="image-caption"><span>Benin head</span><span>Copper alloy · reference image</span></div>
+              <div className="image-caption"><span>Bronze bowl</span><span>Project image</span></div>
             </div>
             <div className="hero-vertical-label">MEMORY · MATERIAL · MEANING</div>
             <div className="hero-seal" aria-hidden="true"><span>O</span><small>ONIKAN<br />ARCHIVE</small></div>
@@ -157,7 +159,7 @@ function HomePage() {
           ) : (
             <div className="artifact-grid">{artifacts.map((artifact) => <ArtifactCard key={artifact.id} artifact={artifact} />)}</div>
           )}
-          <div className="collection-foot"><span>Records are added as research develops.</span><div className="collection-page-controls">{pages > 1 && <><button type="button" onClick={() => setPage((current) => Math.max(1, current - 1))} disabled={page === 1}>← Previous</button><span>{page} / {pages}</span><button type="button" onClick={() => setPage((current) => Math.min(pages, current + 1))} disabled={page === pages}>Next →</button></>}<a className="text-link" href="#references">Read our sources <ArrowIcon /></a></div></div>
+          <div className="collection-foot"><span>Records are added as research develops.</span><div className="collection-page-controls">{pages > 1 && <><button type="button" onClick={() => setPage((current) => Math.max(1, current - 1))} disabled={page === 1}>← Previous</button><span>{page} / {pages}</span><button type="button" onClick={() => setPage((current) => Math.min(pages, current + 1))} disabled={page === pages}>Next →</button></>}<a className="text-link" href="/references">Read our sources <ArrowIcon /></a></div></div>
         </section>
 
         <section className="story section-pad" id="story" aria-labelledby="story-title">
@@ -166,7 +168,7 @@ function HomePage() {
             <p className="eyebrow">Why this archive</p>
             <h2 id="story-title">Documentation is an act of <em>care.</em></h2>
             <p>Objects carry more than form. They hold relationships, making traditions, places and histories. This archive brings available research together so each record can be read with context—and can keep growing as knowledge deepens.</p>
-            <a className="text-link" href="#learn">Learn about the project <ArrowIcon /></a>
+            <a className="text-link" href="/learn">Learn about the project <ArrowIcon /></a>
           </div>
           <div className="story-aside"><span className="aside-number">01 / 03</span><p>Built for an open-ended collection and for the people who care for it.</p></div>
         </section>
@@ -175,9 +177,9 @@ function HomePage() {
           <div className="learn-topline"><p className="eyebrow">Go beyond the object</p><span>Knowledge in context</span></div>
           <h2 id="learn-title">A place to look<br />closer, and <em>learn.</em></h2>
           <div className="learn-grid">
-            <a className="learn-card" href="#references"><span className="learn-index">01</span><span className="learn-title">Materials &amp; making</span><span className="learn-desc">Explore the knowledge, skill and techniques held in each object.</span><ArrowIcon /></a>
-            <a className="learn-card" href="#references"><span className="learn-index">02</span><span className="learn-title">Histories &amp; provenance</span><span className="learn-desc">Read the record of an object’s movement, ownership and care.</span><ArrowIcon /></a>
-            <a className="learn-card" href="#references"><span className="learn-index">03</span><span className="learn-title">Sources &amp; further reading</span><span className="learn-desc">Follow references that inform the documentation.</span><ArrowIcon /></a>
+            <a className="learn-card" href="/learn#materials"><span className="learn-index">01</span><span className="learn-title">Materials &amp; making</span><span className="learn-desc">Explore the knowledge, skill and techniques held in each object.</span><ArrowIcon /></a>
+            <a className="learn-card" href="/learn#preservation"><span className="learn-index">02</span><span className="learn-title">Histories &amp; preservation</span><span className="learn-desc">Discover how archaeological objects connect people, place and cultural memory.</span><ArrowIcon /></a>
+            <a className="learn-card" href="/references"><span className="learn-index">03</span><span className="learn-title">Sources &amp; further reading</span><span className="learn-desc">Follow the references and image credits used in this project.</span><ArrowIcon /></a>
           </div>
         </section>
 
@@ -185,17 +187,16 @@ function HomePage() {
 
         <section className="references section-pad" id="references" aria-labelledby="references-title">
           <div><p className="eyebrow">Research with references</p><h2 id="references-title">Grounded in sources.<br /><em>Open to discovery.</em></h2></div>
-          <p>Every record can connect to its references, so visitors can follow the research and see where information comes from. Sources will be published alongside the collection as they are reviewed.</p>
-          <a className="button button-outline" href="#collection">Browse documented objects <ArrowIcon /></a>
+          <p>Explore the books, museum resources, media articles and project photographs that inform this documentation.</p>
+          <a className="button button-outline" href="/references">View references <ArrowIcon /></a>
         </section>
       </main>
 
       <footer className="site-footer">
-        <a className="wordmark footer-wordmark" href="#top"><span className="wordmark-symbol" aria-hidden="true">O</span><span>Onikan<br />Chronicles</span></a>
-        <p>A living archive for the objects, histories and knowledge of Onikan.</p>
+        <a className="wordmark footer-wordmark" href="#top"><span className="wordmark-symbol" aria-hidden="true">O</span><span>Onikan<br />Documentation</span></a>
+        <p>A growing documentation of Onikan’s objects, histories and knowledge.</p>
         <a href="#top" className="back-top">Back to top ↑</a>
-        <small>© {new Date().getFullYear()} Onikan Terracotta Chronicles</small>
-        <small className="photo-credit">Photo: Mike Peel, <a href="https://commons.wikimedia.org/wiki/File:Benin_Head,_Bristol_City_Museum_and_Art_Gallery.jpg" target="_blank" rel="noreferrer">Benin Head at Bristol City Museum and Art Gallery</a>, resized for display, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">CC BY-SA 4.0</a>.</small>
+        <small>© {new Date().getFullYear()} Onikan Terracotta Documentation</small>
       </footer>
     </>
   );
@@ -204,6 +205,8 @@ function HomePage() {
 export default function App() {
   if (window.location.hostname.startsWith('admin.')) return <AdminPage />;
   if (/^\/admin\/?$/.test(window.location.pathname)) return <AdminPage />;
+  if (/^\/learn\/?$/.test(window.location.pathname)) return <LearnPage />;
+  if (/^\/references\/?$/.test(window.location.pathname)) return <ReferencesPage />;
   const match = window.location.pathname.match(/^\/artifacts\/([^/]+)\/?$/);
   if (match) return <ArtifactPage identifier={decodeURIComponent(match[1])} />;
   return <HomePage />;
